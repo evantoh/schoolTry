@@ -40,6 +40,9 @@
                 <span>{{ $task->description }}</span>
                 <span>{{ $task->duedate }}</span>
                 <span>{{ $task->status }}</span>
+                <span>{{ $task->deadline }}</span>
+                <span>{{ $task->reminder }}</span>
+
                 <a href="{{ route('tasks.show', $task->id) }}">Details</a>
             </li>
         @empty

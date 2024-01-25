@@ -88,6 +88,10 @@ select {
 .btn-danger {
     background-color: #dc3545;
 }
+.overdue-task-list li {
+    background-color: #f8d7da;
+}
+
 
 /* Responsive Styles */
 @media screen and (max-width: 600px) {

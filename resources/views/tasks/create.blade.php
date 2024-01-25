@@ -66,6 +66,12 @@
             <option value="done">Done</option>
         </select>
 
+        <label for="deadline">Dead Lines:</label>
+        <input type="date" name="deadline">
+
+        <label for="reminder"> Reminder:</label>
+        <input type="date" name="reminder">
+
         <button type="submit" class="btn btn-success">Create Task</button>
     </form>
 @endsection

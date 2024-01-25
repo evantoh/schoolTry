@@ -48,8 +48,12 @@ Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.upda
 
 
 // delete tasks
-
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
+// display tasks which are overdue
+Route::get('/tasks/overdue', [TaskController::class, 'overdue'])->name('tasks.overdue');
+
+
 
 
 

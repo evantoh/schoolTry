@@ -5,6 +5,7 @@ use App\Models\Task;
 
 
 use Illuminate\Http\Request;
+use Carbon\Carbon; //inbuilt date library
 
 class TaskController extends Controller
 {
@@ -22,7 +23,7 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
-    
+
     // function to store Tasks and add validation of some field and make them required
     public function store(Request $request)
     {
@@ -31,8 +32,16 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'duedate' => 'nullable|date',
             'status' => 'nullable|in:to do,in progress,done',
+            'deadline' => 'nullable|date',
+            'reminder' => 'nullable|date',
 
         ]);
+
+        // Convert date strings to Carbon objects
+        $request['duedate'] = $request['duedate'] ? Carbon::parse($request['duedate']) : null;
+        $request['deadline'] = $request['deadline'] ? Carbon::parse($request['deadline']) : null;
+        $request['reminder'] = $request['reminder'] ? Carbon::parse($request['reminder']) : null;
+
 
         Task::create($request->all());
         // return message when tasks have been created successfully
@@ -56,8 +65,18 @@ class TaskController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            // add other validation rules as needed
+            'description' => 'nullable|string',
+            'duedate' => 'nullable|date',
+            'status' => 'nullable|in:to do,in progress,done',
+            'deadline' => 'nullable|date',
+            'reminder' => 'nullable|date',        
         ]);
+
+        // Convert date strings to Carbon objects
+        $request['duedate'] = $request['duedate'] ? Carbon::parse($request['duedate']) : null;
+        $request['deadline'] = $request['deadline'] ? Carbon::parse($request['deadline']) : null;
+        $request['reminder'] = $request['reminder'] ? Carbon::parse($request['reminder']) : null;
+
 
         $task->update($request->all());
 
@@ -71,6 +90,15 @@ class TaskController extends Controller
 
         return redirect('/tasks')->with('success', 'Task deleted successfully!');
     }
+
+
+    // get and display tasks which are overdue
+    public function overdue()
+{
+    $overdueTasks = Task::where('duedate', '<', now())->get();
+    return view('tasks.overdue', compact('overdueTasks'));
+}
+
 }
 
     

@@ -24,6 +24,10 @@ return new class extends Migration
 
             // add columns status with [to do ,in progress and done]
             $table->enum('status', ['to do', 'in progress', 'done'])->default('to do');
+
+            // add columns deadline and reminder
+            $table->dateTime('deadline')->nullable();
+            $table->dateTime('reminder')->nullable();
             $table->timestamps();
         });
     }
