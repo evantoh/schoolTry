@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            // add columns title
+            $table->string('title');
             $table->timestamps();
         });
     }
