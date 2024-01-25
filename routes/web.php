@@ -24,14 +24,24 @@ Route::get('/', function () {
 
 // ROute to list all tasks
 Route::get('/tasks', [TaskController::class, 'listallTasks']);
+
 // ROute to create tasks
 Route::get('/tasks/create', [TaskController::class, 'create']);
+
 //store/save tasks created using Post method
 Route::post('/tasks', [TaskController::class, 'store']);
-// Route::get('/tasks/{task}', [TaskController::class, 'show']);
-// Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
-// Route::put('/tasks/{task}', [TaskController::class, 'update']);
-// Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+
+// get each tasks details by passing taskID
+Route::get('/tasks/{task}', [TaskController::class, 'show']);
+
+// edit tasks
+Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
+
+// update tasks
+Route::put('/tasks/{task}', [TaskController::class, 'update']);
+
+// delete tasks
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
 
 
 
