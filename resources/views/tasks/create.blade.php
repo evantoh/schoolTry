@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,4 +39,33 @@
 
     <a href="/tasks">Back to Task List</a>
 </body>
-</html>
+</html> -->
+@extends('layouts.app')
+
+@section('title', 'Create Task')
+
+@section('content')
+    <h1>Create Task</h1>
+
+    <!-- Task creation form -->
+    <form action="{{ route('tasks.store') }}" method="post">
+        @csrf
+        <label for="title">Title:</label>
+        <input type="text" name="title" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description"></textarea>
+
+        <label for="duedate">Due Date:</label>
+        <input type="date" name="duedate">
+
+        <label for="status">Status:</label>
+        <select name="status">
+            <option value="to do">To Do</option>
+            <option value="in progress">In Progress</option>
+            <option value="done">Done</option>
+        </select>
+
+        <button type="submit" class="btn btn-success">Create Task</button>
+    </form>
+@endsection

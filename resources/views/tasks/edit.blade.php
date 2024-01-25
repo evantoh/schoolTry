@@ -1,45 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Task</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Edit Task')
+
+@section('content')
     <h1>Edit Task</h1>
 
-    @if ($errors->any())
-        <div>
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="/tasks/{{ $task->id }}" method="POST">
+    <!-- Task editing form -->
+    <form action="{{ route('tasks.update', $task->id) }}" method="post">
         @csrf
-        @method('PUT')
+        @method('put')
+
         <label for="title">Title:</label>
         <input type="text" name="title" value="{{ $task->title }}" required>
-        <!-- Add other fields as needed -->
 
         <label for="description">Description:</label>
-        <input type="text" name="description" value="{{ $task->description }}" required>
+        <textarea name="description">{{ $task->description }}</textarea>
 
-        <label for="title">Due Date:</label>
-        <input type="text" name="duedate" value="{{ $task->duedate }}" required>
+        <label for="duedate">Due Date:</label>
+        <input type="date" name="duedate" value="{{ $task->duedate }}">
 
-        <label for="title">Status:</label>
-        <input type="text" name="status" value="{{ $task->status }}" required>
+        <label for="status">Status:</label>
+        <select name="status">
+            <option value="to do" {{ $task->status === 'to do' ? 'selected' : '' }}>To Do</option>
+            <option value="in progress" {{ $task->status === 'in progress' ? 'selected' : '' }}>In Progress</option>
+            <option value="done" {{ $task->status === 'done' ? 'selected' : '' }}>Done</option>
+        </select>
 
-        <button type="submit">Updates Task</button>
+        <button type="submit" class="btn btn-primary">Update Task</button>
     </form>
-
-    <a href="/tasks/{{ $task->id }}">Cancel</a>
-
-    <a href="/tasks">Back to Task List</a>
-</body>
-</html>
+@endsection

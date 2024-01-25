@@ -23,25 +23,34 @@ Route::get('/', function () {
 });
 
 // ROute to list all tasks
-Route::get('/tasks', [TaskController::class, 'listallTasks']);
+// Route::get('/tasks', [TaskController::class, 'listallTasks']);
+Route::get('/tasks', [TaskController::class, 'listallTasks'])->name('tasks.listallTasks');
 
-// ROute to create tasks
-Route::get('/tasks/create', [TaskController::class, 'create']);
+
+// Route to create tasks
+Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+
 
 //store/save tasks created using Post method
-Route::post('/tasks', [TaskController::class, 'store']);
+Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+
 
 // get each tasks details by passing taskID
-Route::get('/tasks/{task}', [TaskController::class, 'show']);
+Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+
 
 // edit tasks
-Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
+Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+
 
 // update tasks
-Route::put('/tasks/{task}', [TaskController::class, 'update']);
+Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+
 
 // delete tasks
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
 
 
 
