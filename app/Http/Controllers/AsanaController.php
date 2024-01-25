@@ -3,53 +3,60 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
-// use the config to get  asana creds
 use Config;
-
 
 class AsanaController extends Controller
 {
+    /**
+     * Fetch tasks from Asana.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function fetchAsanaTasks()
     {
+        // Get Asana access token from config
         $accessToken = Config::get('asana.access_token');
 
+        // Make a GET request to Asana API to fetch tasks
         $response = Http::withHeaders([
             'Authorization' => $accessToken,
         ])->get('https://app.asana.com/api/1.0/user_task_lists/1206441959768782/tasks');
 
         // Check if the request was successful
         if ($response->successful()) {
-            $tasks = $response->json()['data']; // Assuming the response contains a 'data' key
+            // Parse the JSON response and pass tasks to the view
+            $tasks = $response->json()['data'];
             return view('tasks', ['tasks' => $tasks]);
         } else {
-            // Handle the error
-            $error = $response->json();
-            return response()->json(['error' => $error], $response->status());
+            // Handle the error by returning a JSON response with error details
+            return response()->json(['error' => $response->json()], $response->status());
         }
     }
 
+    /**
+     * Get details for a specific task from Asana.
+     *
+     * @param  string $id
+     * @return \Illuminate\Http\Response
+     */
     public function detailsFromAsana($id)
     {
+        // Get Asana access token from config
         $accessToken = Config::get('asana.access_token');
 
+        // Make a GET request to Asana API to fetch details for a specific task
         $response = Http::withHeaders([
             'Authorization' => $accessToken,
         ])->get('https://app.asana.com/api/1.0/tasks/' . $id);
 
         // Check if the request was successful
         if ($response->successful()) {
-            $task = $response->json()['data']; // Assuming the response contains a 'data' key
-
-            // Debugging: Dump and die to see the content
-            // dd($task);            
+            // Parse the JSON response and pass task details to the view
+            $task = $response->json()['data'];
             return view('tasks.detailsFromAsana', ['task' => $task]);
         } else {
-            // Handle the error
-            $error = $response->json();
-            return view('tasks.detailsFromAsana')->with('error', 'Failed to retrieve task details');
+            // Abort the request and provide an error response
+            abort($response->status(), 'Failed to retrieve task details');
         }
     }
-
-
-
 }
