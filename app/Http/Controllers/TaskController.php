@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Carbon\Carbon; // In-built date library
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -25,6 +26,7 @@ class TaskController extends Controller
     // Function to store tasks and add validation for some fields making them required
     public function store(Request $request)
     {
+        // Validation rules for task creation
         $request->validate([
             'title' => 'required',
             'description' => 'nullable|string',
@@ -32,13 +34,17 @@ class TaskController extends Controller
             'status' => 'nullable|in:to do,in progress,done',
         ]);
 
-        // Convert date strings to Carbon objects
-        $request['duedate'] = $request['duedate'] ? Carbon::parse($request['duedate']) : null;
-
-        Task::create($request->all());
-
-        // Return a message when tasks have been created successfully
-        return redirect('/tasks')->with('success', 'Task created successfully!');
+        // Check if user is authenticated
+        if (Auth::check()) {
+            // User is authenticated
+            $task = new Task($request->all());
+            Auth::user()->tasks()->save($task);
+    
+            return redirect('/tasks')->with('success', 'Task created successfully!');
+        } else {
+            // User is not authenticated, handle accordingly
+            return redirect('/login')->with('error', 'Please log in to create tasks.');
+        }
     }
 
     // Show tasks
@@ -56,6 +62,7 @@ class TaskController extends Controller
     // Update task after editing
     public function update(Request $request, Task $task)
     {
+        // Validation rules for task update
         $request->validate([
             'title' => 'required',
             'description' => 'nullable|string',
@@ -66,6 +73,7 @@ class TaskController extends Controller
         // Convert date strings to Carbon objects
         $request['duedate'] = $request['duedate'] ? Carbon::parse($request['duedate']) : null;
 
+        // Update the task with the provided data
         $task->update($request->all());
 
         return redirect('/tasks')->with('success', 'Task updated successfully!');
@@ -74,6 +82,7 @@ class TaskController extends Controller
     // Delete task
     public function destroy(Task $task)
     {
+        // Delete the specified task
         $task->delete();
 
         return redirect('/tasks')->with('success', 'Task deleted successfully!');
@@ -82,8 +91,8 @@ class TaskController extends Controller
     // Get and display tasks which are overdue
     public function overdue()
     {
+        // Retrieve tasks where duedate is in the past
         $overdueTasks = Task::where('duedate', '<', now())->get();
         return view('tasks.overdue', compact('overdueTasks'));
     }
 }
-

@@ -28,6 +28,9 @@ return new class extends Migration
             // add columns deadline and reminder
             $table->dateTime('deadline')->nullable();
             $table->dateTime('reminder')->nullable();
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

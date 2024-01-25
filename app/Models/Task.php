@@ -12,4 +12,10 @@ class Task extends Model
 
     // Use the HasFactory trait for model factories
     use HasFactory;
+
+    //create a relationship
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
