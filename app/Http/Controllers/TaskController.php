@@ -32,8 +32,8 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'duedate' => 'nullable|date',
             'status' => 'nullable|in:to do,in progress,done',
-            'deadline' => 'nullable|date',
-            'reminder' => 'nullable|date',
+            // 'deadline' => 'nullable|date',
+            // 'reminder' => 'nullable|date',
 
         ]);
 
@@ -68,8 +68,8 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'duedate' => 'nullable|date',
             'status' => 'nullable|in:to do,in progress,done',
-            'deadline' => 'nullable|date',
-            'reminder' => 'nullable|date',        
+            // 'deadline' => 'nullable|date',
+            // 'reminder' => 'nullable|date',        
         ]);
 
         // Convert date strings to Carbon objects

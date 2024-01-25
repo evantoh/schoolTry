@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\AsanaController;
+
 
 
 
@@ -52,6 +54,14 @@ Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.
 
 // display tasks which are overdue
 Route::get('/tasks/overdue', [TaskController::class, 'overdue'])->name('tasks.overdue');
+
+
+// Fetch all Tasks from Asana
+Route::get('/fetch-asana-tasks', [AsanaController::class, 'fetchAsanaTasks'])->name('tasks.fetchAsanaTasks');
+
+Route::get('/tasks/{id}/details', [AsanaController::class, 'detailsFromAsana'])->name('tasks.detailsFromAsana');
+
+
 
 
 

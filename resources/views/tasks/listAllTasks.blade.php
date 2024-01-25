@@ -40,8 +40,8 @@
                 <span>{{ $task->description }}</span>
                 <span>{{ $task->duedate }}</span>
                 <span>{{ $task->status }}</span>
-                <span>{{ $task->deadline }}</span>
-                <span>{{ $task->reminder }}</span>
+                <!-- <span>{{ $task->deadline }}</span>
+                <span>{{ $task->reminder }}</span> -->
 
                 <a href="{{ route('tasks.show', $task->id) }}">Details</a>
             </li>
@@ -51,4 +51,6 @@
     </ul>
 
     <a href="{{ route('tasks.create') }}" class="btn btn-primary">Create Task</a>
+    <a href="{{ route('tasks.fetchAsanaTasks') }}" class="btn btn-primary">View Tasks Asana</a>
+
 @endsection
