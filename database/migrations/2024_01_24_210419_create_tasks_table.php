@@ -15,6 +15,15 @@ return new class extends Migration
             $table->id();
             // add columns title
             $table->string('title');
+
+            // add columns description
+            $table->text('description')->nullable();
+
+            // add columns dueDate
+            $table->date('duedate')->nullable();
+
+            // add columns status with [to do ,in progress and done]
+            $table->enum('status', ['to do', 'in progress', 'done'])->default('to do');
             $table->timestamps();
         });
     }
