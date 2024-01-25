@@ -23,7 +23,15 @@
         @csrf
         <label for="title">Title:</label>
         <input type="text" name="title" required>
-        <!-- Add other fields as needed -->
+
+        <label for="description">Description:</label>
+        <input type="text" name="description" required>
+
+        <label for="duedate">Due Date:</label>
+        <input type="date" name="duedate" required>
+
+        <label for="status">Status:</label>
+        <input type="text" name="status" required>
 
         <button type="submit">Create Task</button>
     </form>

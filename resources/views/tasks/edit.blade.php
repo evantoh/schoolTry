@@ -26,7 +26,16 @@
         <input type="text" name="title" value="{{ $task->title }}" required>
         <!-- Add other fields as needed -->
 
-        <button type="submit">Update Task</button>
+        <label for="description">Description:</label>
+        <input type="text" name="description" value="{{ $task->description }}" required>
+
+        <label for="title">Due Date:</label>
+        <input type="text" name="duedate" value="{{ $task->duedate }}" required>
+
+        <label for="title">Status:</label>
+        <input type="text" name="status" value="{{ $task->status }}" required>
+
+        <button type="submit">Updates Task</button>
     </form>
 
     <a href="/tasks/{{ $task->id }}">Cancel</a>

@@ -15,6 +15,7 @@
             <li>
                 <a href="/tasks/{{ $task->id }}">{{ $task->title }}</a>
             </li>
+
         @endforeach
     </ul>
 </body>

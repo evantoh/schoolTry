@@ -22,12 +22,16 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
+    
     // function to store Tasks and add validation of some field and make them required
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required',
-            // add other validation rules as needed
+            'description' => 'nullable|string',
+            'duedate' => 'nullable|date',
+            'status' => 'nullable|in:to do,in progress,done',
+
         ]);
 
         Task::create($request->all());
@@ -40,11 +44,13 @@ class TaskController extends Controller
     {
         return view('tasks.show', compact('task'));
     }
+
     // edit specific tasks by id
     public function edit(Task $task)
     {
         return view('tasks.edit', compact('task'));
     }
+
     //  update task after editing
     public function update(Request $request, Task $task)
     {
