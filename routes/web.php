@@ -17,7 +17,7 @@ use App\Http\Controllers\AsanaController;
 
 // Default page when you log in
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingPage');
 });
 
 // Route to list all tasks
@@ -50,6 +50,7 @@ Route::get('/fetch-asana-tasks', [AsanaController::class, 'fetchAsanaTasks'])->n
 // Get details of a task from Asana
 Route::get('/tasks/{id}/details', [AsanaController::class, 'detailsFromAsana'])->name('tasks.detailsFromAsana');
 
+
 // Authentication Routes for Jetstream
 Route::middleware([
     'auth:sanctum',
@@ -60,3 +61,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+

@@ -1,33 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
 
-@extends('layouts.app')
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task List</title>
 
-@section('title', 'Task List')
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-@section('styles')
-    <!-- Add specific styles for the task list page here -->
-@endsection
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
 
-@section('content')
-    <h1>Task List</h1>
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    <ul class="task-list">
-        @forelse ($tasks as $task)
-            <li>
-                <span>{{ $task->title }}</span>
-                <span>{{ $task->description }}</span>
-                <span>{{ $task->duedate }}</span>
-                <span>{{ $task->status }}</span>
-                <!-- <span>{{ $task->deadline }}</span>
-                <span>{{ $task->reminder }}</span> -->
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
 
-                <a href="{{ route('tasks.show', $task->id) }}">Details</a>
-            </li>
-        @empty
-            <li>No tasks found.</li>
-        @endforelse
-    </ul>
+        .task-list li {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            transition: transform 0.3s ease-in-out;
+        }
 
-    <a href="{{ route('tasks.create') }}" class="btn btn-primary">Create Task</a>
-    <a href="{{ route('tasks.fetchAsanaTasks') }}" class="btn btn-primary">View Tasks Asana</a>
+        .task-list li:hover {
+            transform: scale(1.05);
+        }
 
-@endsection
+        .task-details {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        @media only screen and (max-width: 768px) {
+            main {
+                max-width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Task List</h1>
+    </header>
+
+    <!-- Main content section -->
+    <main>
+        <ul class="task-list">
+            <?php if (!empty($tasks)): ?>
+                <?php foreach ($tasks as $task): ?>
+                    <li>
+                        <div class="task-details">
+                            <p><strong>Title:</strong> <?= htmlspecialchars($task->title) ?></p>
+                            <p><strong>Description:</strong> <?= htmlspecialchars($task->description) ?></p>
+                            <p><strong>Due Date:</strong> <?= htmlspecialchars($task->duedate) ?></p>
+                            <p><strong>Status:</strong> <?= htmlspecialchars($task->status) ?></p>
+                        </div>
+                        <a href="<?= route('tasks.show', $task->id) ?>" class="btn">Details</a>
+                    </li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <li>No tasks found.</li>
+            <?php endif; ?>
+        </ul>
+
+        <a href="<?= route('tasks.create') ?>" class="btn">Create Task</a>
+        <a href="<?= route('tasks.fetchAsanaTasks') ?>" class="btn">View Tasks Asana</a>
+    </main>
+</body>
+
+</html>

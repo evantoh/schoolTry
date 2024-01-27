@@ -25,27 +25,18 @@ class TaskController extends Controller
 
     // Function to store tasks and add validation for some fields making them required
     public function store(Request $request)
-    {
-        // Validation rules for task creation
-        $request->validate([
-            'title' => 'required',
-            'description' => 'nullable|string',
-            'duedate' => 'nullable|date',
-            'status' => 'nullable|in:to do,in progress,done',
-        ]);
+        {
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                'duedate' => 'required',
+                'status' => 'required',
+            ]);
 
-        // Check if user is authenticated
-        if (Auth::check()) {
-            // User is authenticated
-            $task = new Task($request->all());
-            Auth::user()->tasks()->save($task);
-    
+            Task::create($request->all());
+
             return redirect('/tasks')->with('success', 'Task created successfully!');
-        } else {
-            // User is not authenticated, handle accordingly
-            return redirect('/login')->with('error', 'Please log in to create tasks.');
         }
-    }
 
     // Show tasks
     public function show(Task $task)

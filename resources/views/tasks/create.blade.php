@@ -1,38 +1,116 @@
-@extends('layouts.app')  <!-- Extend the 'layouts.app' layout -->
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title', 'Create Task')  <!-- Set the title for this page -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Task</title>
 
-@section('content')
-    <!-- Main content section -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <h1>Create Task</h1>  <!-- Heading for the page -->
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        select {
+            appearance: none;
+            padding-right: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6"><path d="M6 5l6-5H0z" fill="%23007BFF" /></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 8px 8px;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                max-width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Create Task</h1>
+    </header>
 
     <!-- Task creation form -->
-    <form action="{{ route('tasks.store') }}" method="post">
-        @csrf  <!-- CSRF protection token -->
+    <main>
+        <form action="<?= route('tasks.store') ?>" method="post">
+            <?php echo csrf_field(); ?>
 
-        <!-- Title input -->
-        <label for="title">Title:</label>
-        <input type="text" name="title" required>
+            <!-- Title input -->
+            <label for="title">Title:</label>
+            <input type="text" name="title" required>
 
-        <!-- Description textarea -->
-        <label for="description">Description:</label>
-        <textarea name="description"></textarea>
+            <!-- Description textarea -->
+            <label for="description">Description:</label>
+            <textarea name="description"></textarea>
 
-        <!-- Due Date input -->
-        <label for="duedate">Due Date:</label>
-        <input type="date" name="duedate">
+            <!-- Due Date input -->
+            <label for="duedate">Due Date:</label>
+            <input type="date" name="duedate">
 
-        <!-- Status dropdown -->
-        <label for="status">Status:</label>
-        <select name="status">
-            <option value="to do">To Do</option>
-            <option value="in progress">In Progress</option>
-            <option value="done">Done</option>
-        </select>
+            <!-- Status dropdown -->
+            <label for="status">Status:</label>
+            <select name="status">
+                <option value="to do">To Do</option>
+                <option value="in progress">In Progress</option>
+                <option value="done">Done</option>
+            </select>
 
-        <!-- Submit button -->
-        <button type="submit" class="btn btn-success">Create Task</button>
-    </form>
+            <!-- Submit button -->
+            <button type="submit" class="btn">Create Task</button>
+        </form>
+    </main>
+</body>
 
-@endsection
+</html>
